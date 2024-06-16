@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import time
 
+
 cap = cv2.VideoCapture(0)
 pTime = 0
 
@@ -13,11 +14,11 @@ faceDetection = mpFaceDetection.FaceDetection()
 face_trackers = {}
 
 
-def fancyDraw(img, bbox, l=30, t=5, rt= 1):
+def fancyDraw(img, bbox, l=20, t=2, rt= 1):
         x, y, w, h = bbox
         x1, y1 = x + w, y + h
 
-        cv2.rectangle(img, bbox, (255, 0, 255), rt)
+        cv2.rectangle(img, bbox, (0, 255, 0), rt)
         # Top Left  x,y
         cv2.line(img, (x, y), (x + l, y), (0, 0, 255), t)
         cv2.line(img, (x, y), (x, y+l), (0, 0, 255), t)
@@ -70,16 +71,16 @@ while True:
             for fid, (x, y, w, h) in face_trackers.items():
                 if (x, y, w, h) == bbox:
                     cv2.putText(img, f'Face {id+1}', (x, y - 40), cv2.FONT_HERSHEY_PLAIN,
-                                2, (100, 5, 5), 2)
+                                1, (100, 5, 5), 2)
 
     cTime = time.time()
     fps = 1 / (cTime - pTime)
     pTime = cTime
-    cv2.putText(img, f'FPS:{int(fps)}', (20, 70), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 255), 2)
+    cv2.putText(img, f'FPS:{int(fps)}', (0, 300), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
     cv2.imshow("Window", img)
     cv2.waitKey(1)
 
-    if cv2.waitKey(5) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         cap.release()
         cv2.destroyAllWindows()
         break
